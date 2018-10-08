@@ -33,12 +33,12 @@ color: #FF9900;
 <div class="page-header">
 
 <!-- Title and Name -->
-<h1>Puzzle Solver</h1>
+<h1>Jigsaw Puzzle Solver</h1>
 <span style="font-size: 20px; line-height: 1.5em;"><strong>The Computer Visionaries</strong></span><br>
-<span style="font-size: 18px; line-height: 1.5em;">Fall 2018</span><br>
 <span style="font-size: 18px; line-height: 1.5em;">CS 4476 : Intro to Computer Vision</span><br>
-<span style="font-size: 18px; line-height: 1.5em;">Final Project</span><br>
 <span style="font-size: 18px; line-height: 1.5em;">Georgia Tech</span>
+<span style="font-size: 18px; line-height: 1.5em;">Fall 2018</span><br>
+<span style="font-size: 18px; line-height: 1.5em;">Final Project</span><br>
 <hr>
 
 <h1><strong>Proposal</strong></h1>
@@ -46,13 +46,58 @@ color: #FF9900;
 <br>
 
 <h3><i>Project Goal</i></h3>
+We wish to develop a fast, robust, and accurate jigsaw puzzle solver.
+<br><br>
+
+The idea for this project was inspired by the work of Sholomon, David, & Netanyahu [1], as well as T. Allen [2].
+<br><br>
+
+Sholomon, David, & Netanyahu demonstrate how genetic algorithms can be used to reconstruct images after they have been broken into small squares and scrambled.
+Allen's paper focuses on solving simple canonical puzzles with non-square shapes using image processing techniques.
+<br><br>
+
+Sholmon, David, & Netanyahu's method was shown to work on large puzzles (+20,000 pieces) but is fragile.
+Their algorithm is assumed to fail if any of the pieces are missing, rotated, or damaged.
+As well, their system only works on images, and was not shown to work on physical jigsaw puzzles.
+<br><br>
+
+Allen's method was shown to work on restricted physical puzzles.
+The examples givin in his paper are of small jigsaw puzzles (fewer than 20 pieces).
+His system demonstrates flexibility in its ability to solve the puzzle when the input pieces are rotated or jumbled.
+Finally, Allen's algorithm failed to show to combined pieces put together (it just showed compatible pieces next to each other)
+<br><br>
+
+Using the above techniques, we wish to derive our own algorithm for puzzle assembly considering increasingly more complex piece shapes and rotations.<br>
+
+TODO : NEEDED?
+We will then compare our results to that of research on the subject using cumulative error-based metrics.
+
 <br>
 
 <h3><i>Input</i></h3>
+An image of a jigsaw puzzle that follows the bellow assumptions.<br><br>
+
+Assumptions
+<ul>
+  <li> All pieces are facing upwards </li>
+  <li> All piece edges are clearly visible </li>
+  <li> The background is a solid color </li>
+  <li> All pieces are distinguishable from the background </li>
+</ul>
+
+<br>
+<img style="height: 300px;" alt="" src="imgs/Example_Input.png">
+<br>
+<i> Figure 1 : Example input image for our system taken from [2]</i>
 <br>
 
 <h3><i>Output</i></h3>
+A solved jigsaw puzzle image
 <br>
+<img style="height: 300px;" alt="" src="imgs/Example_Output.png">
+<br>
+<br>
+
 
 <h2><strong>Approach</strong></h2>
 <h2><strong>Experiments and Results</strong></h2>

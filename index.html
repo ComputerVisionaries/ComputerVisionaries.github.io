@@ -100,6 +100,37 @@ A solved jigsaw puzzle image
 
 
 <h2><strong>Approach</strong></h2>
+To solve the presented problems, we will initially apply a few existing algorithms to each problem and compare their performance.
+Then, we will make our own adaptations to these existing algorithms to improve their performance for our use cases.
+<br><br>
+
+One existing algorithm we will be evaluating is a genetic algorithm from the work by Sholomon et al. [1].
+As stated in the paper, the problem is formulated as:
+“Given n different non-overlapping pieces of an image,
+the player has to reconstruct the original image,
+taking advantage of both the shape and chromatic information of each piece.”
+Note that rotation is not part of the problem.
+The algorithm frames puzzle configurations as members of a population and uses a metric for dissimilarity between neighboring pieces as its fitness function.
+Then, they apply a classic genetic optimization technique, performing mutations and crossovers amongst the most fit members of the population.
+After applying the algorithm as described in the paper, we will build upon their genetic algorithm by substituting different fitness metrics and crossover operators.
+<br><br>
+
+Another algorithm we will apply is introduced by Gallagher [3].
+Unlike Sholomon et al., which applies a standard optimization algorithm, Gallagher presents a novel technique where the puzzle is represented as a graph.
+This approach does take into account the spatial orientation of pieces.
+Pieces are represented as vertices and edge weights between pieces on the graph represent the output of a dissimilarity metric estimating the difference in color gradients between neighboring pieces.
+Then, a version of Kruskal’s minimum spanning tree algorithm, modified to account for spatial conflicts between pieces, is applied to the graph.
+The resulting tree represents a puzzle configuration that greedily minimizes dissimilarity between neighboring pieces.
+Algorithm performance could be tuned by substituting the dissimilarity metric.
+<br><br>
+
+Based on the success of standard discrete optimization techniques in Sholomon et al.,
+we can apply other discrete optimization algorithms using similar fitness/cost metrics without much modification.
+Other algorithms we might apply seeking better performance include simulated annealing, random hill climbing, and estimation of distribution algorithms such as MIMIC.
+Because implementations of these optimization algorithms are already readily available in libraries like Scikit-Learn,
+applying each technique will require little implementation.
+<br><br>
+
 <h2><strong>Experiments and Results</strong></h2>
 
 <br><br>

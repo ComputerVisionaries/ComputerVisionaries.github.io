@@ -70,6 +70,8 @@ Finally, Allen's algorithm failed to show to combined pieces put together (it ju
 Using the above techniques, we wish to derive our own algorithm for puzzle assembly considering increasingly more complex piece shapes and rotations.
 <br><br>
 
+Finally, while we chose this project mostly out of intellectual curiosity, there are some practical applications that can be derived out of optimal puzzle reconstruction. For instance, optimal piece reconstruction can possibly be used towards automatic piecing-together of archeological finds, which can help quickly determine if any pieces are missing, or to stitch back together a shredded document or picture. In addition, these techniques might be useful for optimal part alignments in some engineering applications. Therefore, this work could serve some extrinsic purposes beside just solving puzzles. <br><br>
+
 <h3><i>Input</i></h3>
 An image of a jigsaw puzzle that follows the bellow assumptions.<br><br>
 
@@ -82,7 +84,7 @@ Assumptions
 </ul>
 
 <br>
-<img style="height: 300px;" alt="" src="imgs/Example_Input.png">
+<img style="height: 300px;" alt="" src="imgs/Example_Input.PNG">
 <br>
 <i> Figure 1 : Example input image for our system taken from [2]</i>
 <br>
@@ -90,7 +92,7 @@ Assumptions
 <h3><i>Output</i></h3>
 A solved jigsaw puzzle image
 <br>
-<img style="height: 300px;" alt="" src="imgs/Example_Output.png">
+<img style="height: 300px;" alt="" src="imgs/Example_Output.PNG">
 <br>
 <i> Figure 2 : Example output image for our system taken from [2]</i>
 <br>
@@ -113,7 +115,7 @@ Development will occure in 2 Phases
 
 <h3><i>Phase 1</i></h3>
 We have identified several algorithms as candidates for our puzzle solver.
-We plan on running these algorithms on the simple square jigsaw puzzles (no rotation, or non-square pieces) and compare their performance.
+We plan on running these algorithms on the simple square jigsaw puzzles (no rotation, or non-square pieces) to compare their performance for selection.
 <br><br>
 
 One existing algorithm we will be evaluating is a genetic algorithm from the work by Sholomon et al. [1].
@@ -143,22 +145,130 @@ Because implementations of these optimization algorithms are already readily ava
 applying each technique to the standard square jigsaw problem will require little implementation.
 <br><br>
 
-After our initial algorithm selection from the candidates, we will modify the selected algorithm to handle rotated puzzle pieces.
-Once we have achieved success in assembling square jigsaw puzzles with rotations, we will again modify the algorithm to handle non-square pieces.
+After our initial algorithm selection from the candidates, we will modify the selected algorithm to handle non-square pieces.<br>
+This will require random generation of non-square pieces.<br>
+Each non-square piece will contain a core square body with either a blank, head or divot on each side.<br>
+Blanks will be reserved for the edges of the puzzles and every divot will have an associated head.<br>
+
+Once piece generation is complete, we will assemble the outer edge of the puzzle by modifying the selected algorithm.<br>
+Finally after the the outer edge has been put together we will use the selected algorithm to fill in the puzzle body.<br>
+
+Once we have achieved success in assembling a jigsaw puzzle with non-square pieces we will add rotated pieces to our algorithm.<br>
+This should require less modification and only require our chosen algorithm be able to search over a larger space.<br>
 
 <h3><i>Phase 2</i></h3>
 
+With the completion of phase 1, we will have a quick and robust algorithm for solving digital puzzles.<br>
+Phase 2 will focus on converting physical jigsaw puzzles into virtual puzzles then.<br>
 
+First we will perform image segmentation by color on the input image.<br>
+Next we will charactarize each puzzle piece by labling each corner.<br>
+Once corners have been labeled we will label each side of every piece as a divot, head, or blank.<br>
+We should be able to feed these charactarized pieces into our phase 1 algorithm.<br>
 <br><br>
 
-
 <h2><strong>Experiments and Results</strong></h2>
+
 <h3><i>Resources</i></h3>
-<h3><i>Datasets</i></h3>
-<h3><i>External Code Bases</i></h3>
-<h3><i>Internal Code Base</i></h3>
-<h3><i>Success Parameters</i></h3>
-<h3><i>Experiments</i></h3>
+<i>Libraries that will be utilized:</i> OpenCV, Scikit-Image and Scikit-Learn
+<br>
+Existing Puzzle-Solving Algorithms:
+<ol>
+  <li>Constrained Minimal Spanning Tree (MST) algorithm with heuristic (Greedy-based)</li>
+  <li>Graph model algorithm</li>
+  <li>Genetic algorithms</li>
+  <li>Edge identification/Edge detection algorithms</li>
+  <li>Pattern recognition algorithms</li>
+  <li>“Piece-to-Piece” matching/Local matching algorithm</li>
+  <li>Global Assembly (Border + Inner pieces) algorithm </li>
+  <li>Feature detection algorithms 	</li>
+</ol>
+
+Our project will be separated into two phases: algorithm exploration and end-to-end solution implementation.<br>
+
+<h3><i>Phase 1</i></h3>
+We will implement and carry out testing on a number of algorithms which can solve the different tiers of problems we have described.<br>
+If the implemented solution solves our need, we will move onto solving the next tier. Otherwise, we will implement a different approach or improve on the current one to reach the target goal.<br>
+Experimental Setup (for each experiment):<br><br>
+
+<strong>Control Variable:</strong> Algorithm<br>
+<strong>Independent Variable:</strong> Puzzle to be solved which depends on the algorithm’s capabilities<br>
+<strong>Dependent Variables:</strong>  Percentage of pieces in the correct position, time it takes to solve with algorithm, time it takes for a person to solve<br>
+<strong>Success Criteria</strong>:<br>
+<ul>
+  <li>Less than 10% of pieces are in incorrect positions</li>
+  <li>It can solve a puzzle faster than the average person</li>
+</ul>
+
+<br>
+<h4>Experiments:</h4>
+<h5> Experiment 1 : Equal-Sized Square Pieces </h5>
+<strong>Data:</strong> https://thejigsawpuzzles.com/ puzzles in square mode<br>
+<strong>Input:</strong> Given an image, we can split the image in to a grid of equal-sized square windows and randomly reorganize them to form a puzzle<br>
+<strong>Output:</strong> Image re-assembled optimally so that boundary differences between windows are minimal<br>
+<strong>Algorithms/Concepts to consider:</strong><br>
+<strong>Kruskal’s MST algorithm [1]:</strong><br>
+assign each puzzle piece to a vertex and the compatibilities between pairs of puzzle pieces to edge weights<br>
+every puzzle piece is included in the minimum spanning tree<br>
+ensure that the MST is constrained so that puzzle pieces do not overlap<br>
+<strong>Genetic algorithm [2]:</strong><br>
+devise a fitness function that can be applied to all the pieces of the puzzle<br>
+perform mutations and crossovers on the  “fit” puzzle pieces to generate the resulting puzzle<br>
+<strong>Global Assembly algorithm [2]:</strong><br>
+because every border piece of the puzzle has 1+ flat sides,
+use piece matching and brute-force concepts to stitch together the border of the puzzle first,
+and then stitch together the inner pieces of the puzzle
+use concepts from the “branch-and-bound” algorithm,
+such as using a grid structure to bound the inner puzzle pieces,
+to find the most optimal puzzle piece that fits the “current slot” in the grid<br>
+<br>
+<h5>Experiment 2 : Irregular Shaped Pieces</h5>
+<strong>Data:</strong> https://thejigsawpuzzles.com/ puzzles in classic mode<br>
+<strong>Input:</strong> Image of disorganized pieces for a simple puzzle – puzzle pieces should be of irregular shape, to distinguish from square pieces of last experiment. Puzzle pieces should also be orientated in the same way for the optimal solution<br>
+<strong>Output:</strong> Image of the puzzle pieces put together to form the most optimal puzzle solution<br>
+<strong>Algorithms/Concepts to consider:</strong></strong><br>
+<strong>Genetic algorithm [2]:</strong><br>
+devise a fitness function that can be applied to all the pieces of the puzzle<br>
+perform mutations and crossovers on the  “fit” puzzle pieces to generate the resulting puzzle<br>
+<strong>Global Assembly algorithm [2]:</strong><br>
+because every border piece of the puzzle has 1+ flat sides, use piece matching and brute-force concepts to stitch together the border of the puzzle first, and then stitch together the inner pieces of the puzzle<br>
+use concepts from the “branch-and-bound” algorithm, such as using a grid structure to bound the inner puzzle pieces, to find the most optimal puzzle piece that fits the “current slot” in the grid<br>
+<strong>Feature Detection + Pattern Recognition algorithm [4]:</strong><br>
+utilize the SIFT algorithm/method from the OpenCV library to perform feature detection operations on each puzzle piece and, therefore, decide which pieces have similar features and can be “stitched together”
+utilize edge detection techniques to get the “outlines” of every image<br>
+
+<h5>Experiment 3: Rotated Irregular Shaped Pieces</h5>
+<strong>Data:</strong> If we can’t find any online puzzles that already has rotated pieces, we can take the dataset from the previous experiment and manually rotate the pieces<br>
+<strong>Input:</strong> Same input as the previous experiment, except now the pieces can be rotated in any direction – orientation must now be taken into account<br>
+<strong>Output:</strong> Image of the puzzle pieces put together to form the most optimal puzzle solution<br>
+<strong>Algorithms/Concepts to consider:</strong><br>
+<strong>Standardize orientation of all puzzle pieces (iterate through all puzzle pieces and orient all the pieces to face the same direction) and then apply the algorithms/concepts to consider from Tier 2 (previous section)<br>
+<strong>Feature Detection + Pattern Recognition algorithm [4]:</strong><br>
+disregard standardizing the orientation of all puzzle pieces and just apply feature detection, pattern recognition, and edge detection techniques<br>
+<br>
+
+<h3><i>Phase 2</i></h3>
+Using the knowledge we gained from phase 1, we will implement an end-to-end algorithm which can take in an image of puzzle pieces on a table, solve the puzzle and return the final generated image from the combination of pieces.<br>
+
+<h4><i>Success Criteria</i></h4>
+<ul>
+  <li>Less than 10% of pieces are in incorrect positions<br></li>
+  <li>It can solve a puzzle geared towards young children<br></li>
+</ul>
+
+<h4><i>Experiment:</i></h4>
+Real Life Puzzle<br>
+<strong>Data:</strong> Puzzles bought from the store<br>
+<strong>Input:</strong> A picture taken from a camera of the pieces, all of which are irregularly shaped and are arbitrarily rotated<br>
+<strong>Output:</strong> Image of the puzzle pieces put together to form the most optimal puzzle solution<br>
+
+<br>
+<h3>Uncertainties:</h3>
+<ul>
+  <li>The chosen error rate of less than 10% is an estimate. Since we have not yet implemented the different algorithmic approaches, we cannot be certain whether this target is feasible or not. We may modify it as we start coding the project.</li>
+  <li>We will be applying our algorithms to relatively simple puzzles initially. If we achieve solid performance, we will move onto more complex images with a larger number of pieces. We do not know how complicated a puzzle we will be able to solve.</li>
+</ul>
+
 
 
 <br><br>

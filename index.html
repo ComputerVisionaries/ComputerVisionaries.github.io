@@ -52,12 +52,12 @@ We wish to develop a fast, robust, and accurate jigsaw puzzle solver.
 The idea for this project was inspired by the work of Sholomon, David, & Netanyahu [1], as well as T. Allen [2].
 <br><br>
 
-Sholomon, David, & Netanyahu demonstrate how genetic algorithms can be used to reconstruct images after they have been broken into small squares and scrambled.
-Allen's paper focuses on solving simple canonical puzzles with non-square shapes using image processing techniques.
+Sholomon et al. demonstrate how genetic algorithms can solve digital square jigsaw puzzles.
+Allen's paper focuses on solving simple physical puzzles with non-square shapes using image processing techniques.
 <br><br>
 
-Sholmon, David, & Netanyahu's method was shown to work on large puzzles (+20,000 pieces) but is fragile.
-Their algorithm is assumed to fail if any of the pieces are missing, rotated, or damaged.
+Sholmon et al.'s method was shown to work on large puzzles (+20,000 pieces) but is fragile.
+Their algorithm ignores situations where any of the pieces are missing, rotated, or damaged.
 As well, their system only works on images, and was not shown to work on physical jigsaw puzzles.
 <br><br>
 
@@ -67,12 +67,8 @@ His system demonstrates flexibility in its ability to solve the puzzle when the 
 Finally, Allen's algorithm failed to show to combined pieces put together (it just showed compatible pieces next to each other)
 <br><br>
 
-Using the above techniques, we wish to derive our own algorithm for puzzle assembly considering increasingly more complex piece shapes and rotations.<br>
-
-TODO : NEEDED?
-We will then compare our results to that of research on the subject using cumulative error-based metrics.
-
-<br>
+Using the above techniques, we wish to derive our own algorithm for puzzle assembly considering increasingly more complex piece shapes and rotations.
+<br><br>
 
 <h3><i>Input</i></h3>
 An image of a jigsaw puzzle that follows the bellow assumptions.<br><br>
@@ -86,7 +82,7 @@ Assumptions
 </ul>
 
 <br>
-<img style="height: 300px;" alt="" src="imgs/Example_Input.png">
+<img style="height: 300px;" alt="" src="imgs/Example_Input.PNG">
 <br>
 <i> Figure 1 : Example input image for our system taken from [2]</i>
 <br>
@@ -94,14 +90,30 @@ Assumptions
 <h3><i>Output</i></h3>
 A solved jigsaw puzzle image
 <br>
-<img style="height: 300px;" alt="" src="imgs/Example_Output.png">
+<img style="height: 300px;" alt="" src="imgs/Example_Output.PNG">
 <br>
+<i> Figure 2 : Example output image for our system taken from [2]</i>
 <br>
 
+<h3><i>Real World Application</i></h3>
+While we chose this project mostly out of intellectual curiosity,
+there are some practical applications that can be derived out of optimal puzzle reconstruction.
+For instance, optimal piece reconstruction can possibly be used towards automatic piecing-together of archeological finds,
+which can help quickly determine if any pieces are missing, or to stitch back together a shredded document or picture.
+In addition, these techniques might be useful for optimal part alignments in some engineering applications.
+Therefore, this work could serve some extrinsic purposes beside just solving puzzles.
+<br><br>
 
 <h2><strong>Approach</strong></h2>
-To solve the presented problems, we will initially apply a few existing algorithms to each problem and compare their performance.
-Then, we will make our own adaptations to these existing algorithms to improve their performance for our use cases.
+Development will occure in 2 Phases
+<ul>
+  <li>Phase 1 : Add flexibility to existing square jigsaw solvers</li>
+  <li>Phase 2 : Convert physical jigsaw images into digital square jigsaw ones</li>
+</ul>
+
+<h3><i>Phase 1</i></h3>
+We have identified several algorithms as candidates for our puzzle solver.
+We plan on running these algorithms on the simple square jigsaw puzzles (no rotation, or non-square pieces) and compare their performance.
 <br><br>
 
 One existing algorithm we will be evaluating is a genetic algorithm from the work by Sholomon et al. [1].
@@ -128,10 +140,26 @@ Based on the success of standard discrete optimization techniques in Sholomon et
 we can apply other discrete optimization algorithms using similar fitness/cost metrics without much modification.
 Other algorithms we might apply seeking better performance include simulated annealing, random hill climbing, and estimation of distribution algorithms such as MIMIC.
 Because implementations of these optimization algorithms are already readily available in libraries like Scikit-Learn,
-applying each technique will require little implementation.
+applying each technique to the standard square jigsaw problem will require little implementation.
 <br><br>
 
+After our initial algorithm selection from the candidates, we will modify the selected algorithm to handle rotated puzzle pieces.
+Once we have achieved success in assembling square jigsaw puzzles with rotations, we will again modify the algorithm to handle non-square pieces.
+
+<h3><i>Phase 2</i></h3>
+
+
+<br><br>
+
+
 <h2><strong>Experiments and Results</strong></h2>
+<h3><i>Resources</i></h3>
+<h3><i>Datasets</i></h3>
+<h3><i>External Code Bases</i></h3>
+<h3><i>Internal Code Base</i></h3>
+<h3><i>Success Parameters</i></h3>
+<h3><i>Experiments</i></h3>
+
 
 <br><br>
   <hr>
